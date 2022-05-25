@@ -2,15 +2,19 @@
 //A Player specifies the position in the grid as row,col...both rows and columns starts from 0 and the last entry is 14 in a 15 * 15 board
 #include<iostream>
 #include<string>
+#include <vector>
 using namespace std;
 
 //Declare our board
-int board[15][15] = {0};
+
 int n = 15;
+int board[15][15] = {0};
 struct Gomoku{
     int player;
+
     Gomoku(int player){
         this->player = player;
+        
     }
     
     bool isWinner(int player){
@@ -116,20 +120,20 @@ struct Gomoku{
             for(int row = 0;row < n; row++){
                 int assessed_index_row = row;       //This is the row index of current point on board
                 int assessed_index_col = col;       //This is the col index of current point on board
-                int first_index_ud_right_row = row - 1;        // row index of first element to the below of current point
-                int first_index_ud_right_col = col + 1;        // col index of first element to the below of current point
-                int second_index_ud_right_row = row - 2;       // row index of second element to the below of current point
-                int second_index_ud_right_col = col + 2;       // col index of second element to the below of current point
-                int third_index_ud_right_row = row - 3;        // row index of third element to the below of current point
-                int third_index_ud_right_col = col + 3;        // col index of third element to the below of current point
+                int first_index_ud_right_row = row - 1;        // row index of first element in right upper diagonal of current point
+                int first_index_ud_right_col = col + 1;        // col index of first element in right upper diagonal of current point
+                int second_index_ud_right_row = row - 2;       // row index of second element in right upper diagonal current point
+                int second_index_ud_right_col = col + 2;       // col index of second element in right upper diagonal current point
+                int third_index_ud_right_row = row - 3;        // row index of third element in right upper diagonal current point
+                int third_index_ud_right_col = col + 3;        // col index of third element in right upper diagonal current point
 
 
-                int first_index_ud_left_row = row - 1;        // col index of first element to the above of current point
-                int first_index_ud_left_col = col- 1;
-                int second_index_ud_left_row = row - 2;       // col index of second element to the above of current point
-                int second_index_ud_left_col = col - 2;
-                int third_index_ud_left_row = row - 3;        // col index of third element to the above of current point
-                int third_index_ud_left_col = col - 3;
+                int first_index_ud_left_row = row - 1;        // row index of first element in left upper diagonal of current point
+                int first_index_ud_left_col = col- 1;         // col index of third element in left upper diagonal of current point
+                int second_index_ud_left_row = row - 2;       // row index of second element in left upper diagonal of current point
+                int second_index_ud_left_col = col - 2;       // col index of second element in left upper diagonal of current point
+                int third_index_ud_left_row = row - 3;        // row index of third element in left upper diagonal of current point
+                int third_index_ud_left_col = col - 3;        // col index of third element in left upper diagonal of current point
                 
                 if((first_index_ud_right_col>= 0 & first_index_ud_right_col<n & first_index_ud_right_row>= 0 & first_index_ud_right_row<n)&&
                 (first_index_ud_left_col>= 0 & first_index_ud_left_col<n & first_index_ud_left_row>= 0 & first_index_ud_left_row<n)&&
@@ -165,40 +169,40 @@ struct Gomoku{
             for(int row = 0;row < n; row++){
                 int assessed_index_row = row;       //This is the row index of current point on board
                 int assessed_index_col = col;       //This is the col index of current point on board
-                int first_index_ud_right_row = row + 1;        // row index of first element to the below of current point
-                int first_index_ud_right_col = col + 1;        // col index of first element to the below of current point
-                int second_index_ud_right_row = row + 2;       // row index of second element to the below of current point
-                int second_index_ud_right_col = col + 2;       // col index of second element to the below of current point
-                int third_index_ud_right_row = row + 3;        // row index of third element to the below of current point
-                int third_index_ud_right_col = col + 3;        // col index of third element to the below of current point
+                int first_index_ld_right_row = row + 1;        // row index of first in right lower diagonal of current point
+                int first_index_ld_right_col = col + 1;        // col index of first in right lower diagonal of current point
+                int second_index_ld_right_row = row + 2;       // row index of second in right lower diagonal of current point
+                int second_index_ld_right_col = col + 2;       // col index of second in right lower diagonal of current point
+                int third_index_ld_right_row = row + 3;        // row index of third in right lower diagonal of current point
+                int third_index_ld_right_col = col + 3;        // col index of third in right lower diagonal of current point
 
 
-                int first_index_ud_left_row = row + 1;        // col index of first element to the above of current point
-                int first_index_ud_left_col = col- 1;
-                int second_index_ud_left_row = row + 2;       // col index of second element to the above of current point
-                int second_index_ud_left_col = col - 2;
-                int third_index_ud_left_row = row + 3;        // col index of third element to the above of current point
-                int third_index_ud_left_col = col - 3;
+                int first_index_ld_left_row = row + 1;        // row index of first element in left lower diagonal of current point
+                int first_index_ld_left_col = col- 1;         // col index of first element in left lower diagonal of current point
+                int second_index_ld_left_row = row + 2;       // row index of second element in left lower diagonal of current point
+                int second_index_ld_left_col = col - 2;       // col index of second element in left lower diagonal of current point
+                int third_index_ld_left_row = row + 3;        // row index of third element in left lower diagonal of current point
+                int third_index_ld_left_col = col - 3;        // col index of third element in left lower diagonal of current point
                 
-                if((first_index_ud_right_col>= 0 & first_index_ud_right_col<n & first_index_ud_right_row>= 0 & first_index_ud_right_row<n)&&
-                (first_index_ud_left_col>= 0 & first_index_ud_left_col<n & first_index_ud_left_row>= 0 & first_index_ud_left_row<n)&&
-                (second_index_ud_right_col>= 0 & second_index_ud_right_col<n & second_index_ud_right_row>= 0 & second_index_ud_right_row<n)&&
-                (second_index_ud_left_col>= 0 & second_index_ud_left_col<n & second_index_ud_left_row>= 0 & second_index_ud_left_row<n)&&
-                (third_index_ud_right_col>= 0 & third_index_ud_right_col<n & third_index_ud_right_row>= 0 & third_index_ud_right_row<n)&&
-                (third_index_ud_left_col>= 0 & third_index_ud_left_col<n & third_index_ud_left_row>= 0 & third_index_ud_left_row<n)){
+                if((first_index_ld_right_col>= 0 & first_index_ld_right_col<n & first_index_ld_right_row>= 0 & first_index_ld_right_row<n)&&
+                (first_index_ld_left_col>= 0 & first_index_ld_left_col<n & first_index_ld_left_row>= 0 & first_index_ld_left_row<n)&&
+                (second_index_ld_right_col>= 0 & second_index_ld_right_col<n & second_index_ld_right_row>= 0 & second_index_ld_right_row<n)&&
+                (second_index_ld_left_col>= 0 & second_index_ld_left_col<n & second_index_ld_left_row>= 0 & second_index_ld_left_row<n)&&
+                (third_index_ld_right_col>= 0 & third_index_ld_right_col<n & third_index_ld_right_row>= 0 & third_index_ld_right_row<n)&&
+                (third_index_ld_left_col>= 0 & third_index_ld_left_col<n & third_index_ld_left_row>= 0 & third_index_ld_left_row<n)){
                     
 
                     if((board[assessed_index_row][assessed_index_col] == player)&&
-                    (board[first_index_ud_right_row][first_index_ud_right_col] == player)&&
-                    (board[second_index_ud_right_row][second_index_ud_right_col] == player)&&
-                    (board[third_index_ud_right_row][third_index_ud_right_col] == player)){
+                    (board[first_index_ld_right_row][first_index_ld_right_col] == player)&&
+                    (board[second_index_ld_right_row][second_index_ld_right_col] == player)&&
+                    (board[third_index_ld_right_row][third_index_ld_right_col] == player)){
                         
                         return true;
                     }
                     else if ((board[assessed_index_row][assessed_index_col] == player)&&
-                    (board[first_index_ud_left_row][first_index_ud_left_col] == player)&&
-                    (board[second_index_ud_left_row][second_index_ud_left_col] == player)&&
-                    (board[third_index_ud_left_row][third_index_ud_left_col] == player))
+                    (board[first_index_ld_left_row][first_index_ld_left_col] == player)&&
+                    (board[second_index_ld_left_row][second_index_ld_left_col] == player)&&
+                    (board[third_index_ld_left_row][third_index_ld_left_col] == player))
                     {
                         
                         return true;
@@ -237,7 +241,6 @@ struct Gomoku{
 
         //Check if a player won
         if(isWinner(player)){
-            printBoard();
             cout << "Game over!!!  player  " << player << " Won \n"<<endl;
             return;
         }
@@ -261,8 +264,8 @@ int main(){
 
     while(gomoku.isWinner(1) == false && gomoku.isWinner(2) == false){
 
-        int row = (rand() % 15);
-        int col = (rand() % 15);
+        int row = (rand() % 10);
+        int col = (rand() % 10);
 
 
         gomoku.makeMove(row, col);
@@ -279,3 +282,6 @@ int main(){
     
     return 0;
 }
+
+
+
