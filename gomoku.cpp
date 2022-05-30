@@ -3,18 +3,35 @@
 #include<iostream>
 #include<string>
 #include <vector>
+#include <fstream>
+
+
 using namespace std;
 //Declare our board
-int n = 15;
-int board[15][15] = {0};
+//int board[15][15] = {0};
+ofstream ofs("output.txt");
+vector<vector<int>>board;
+
 struct Gomoku{
-    int player;
+    int player,n;
     int previous;
     bool status = false;
 
-    Gomoku(int player){
+    Gomoku(int player,int n){
         this->player = player;
-        
+        this->n = n;
+        initialise();
+    }
+
+
+    void initialise(){
+        for(int i = 0 ; i < n ; i++){
+            vector<int>temp;
+            for(int j = 0 ; j < n ; j++){
+                temp.push_back(0);
+            }
+            board.push_back(temp);
+        }
     }
     
     bool isWinner(int player){
@@ -116,9 +133,11 @@ struct Gomoku{
     void makeMove(int row, int col){
         if(player == 1){//place a black piece 
             board[row][col] = 1;
+            ofs << "r"<<row <<"c"<< col << " alg1"<<endl;
         }
         else{//place a white piece
             board[row][col] = 2;
+            ofs << "r"<<row <<"c"<< col << " alg2"<<endl;
         }
         //Check if a player won
         if(isWinner(player)){
@@ -147,20 +166,33 @@ struct Gomoku{
 };
 
 int main(){
-    
-    Gomoku gomoku(2);
-    srand(time(0));
-    while(!gomoku.status){
-        int row = (rand() % 10);
-        int col = (rand() % 10);
-        while(board[row][col] != 0){
-            row = (rand() % 10);
-            col = (rand() % 10);
-        }
-        gomoku.makeMove(row, col);
-        
-        
+
+    vector<int>sizes;
+
+    ifstream file("input.txt");
+    string curr;
+    int current;
+
+    while(getline(file, curr)){
+        current = stoi(curr);
+        sizes.push_back(current);
     }
+
+    for(int i = 0 ; i < sizes.size() ; i++){
+        Gomoku gomoku(1,sizes[i]);
+        ofs << "size = "<<sizes[i]<<endl;
+        srand(time(0));
+        while(!gomoku.status){
+            int row = (rand() % 10);
+            int col = (rand() % 10);
+            while(board[row][col] != 0){
+                row = (rand() % 10);
+                col = (rand() % 10);
+            }
+            gomoku.makeMove(row, col);
+    }       
+        
+     }
     
     
     return 0;
