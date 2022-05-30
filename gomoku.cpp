@@ -149,10 +149,17 @@ struct Gomoku{
 int main(){
     
     Gomoku gomoku(2);
+    srand(time(0));
     while(!gomoku.status){
         int row = (rand() % 10);
         int col = (rand() % 10);
+        while(board[row][col] != 0){
+            row = (rand() % 10);
+            col = (rand() % 10);
+        }
         gomoku.makeMove(row, col);
+        
+        
     }
     
     
