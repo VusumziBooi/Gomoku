@@ -11,6 +11,8 @@ int n = 15;
 int board[15][15] = {0};
 struct Gomoku{
     int player;
+    int previous;
+    bool status = false;
 
     Gomoku(int player){
         this->player = player;
@@ -233,48 +235,61 @@ struct Gomoku{
         if(player == 1){//place a black piece 
             board[row][col] = 1;
         }
-        else{
+        else{//place a white piece
             board[row][col] = 2;
         }
-
-        
-
         //Check if a player won
         if(isWinner(player)){
-            cout << "Game over!!!  player  " << player << " Won \n"<<endl;
+            cout << "Game over!!!  player  " << player << " Won \n"<<"Final board configuration is "<<endl;
+            printBoard();
+            status = true;
             return;
         }
         else{
             //Change turns (different player)
             if(player == 1){
                 player = 2;
+                previous = 1;
             }
             else{
                 player = 1;
+                previous = 2;
             }
-        } 
+        }
+
+        cout << "After player " << previous << " Board position is: "<<endl;
+        printBoard();
+        cout <<endl; 
     }
 
 };
 
 int main(){
     Gomoku gomoku(2);
-
-   
-
-    while(gomoku.isWinner(1) == false && gomoku.isWinner(2) == false){
-
+    while(!gomoku.status){
         int row = (rand() % 10);
         int col = (rand() % 10);
-
-
         gomoku.makeMove(row, col);
-
-        gomoku.printBoard();
-
-        gomoku.isWinner(1);
-        gomoku.isWinner(2);
+        // cout << "After player " << gomoku.previous << " Board position is: "<<endl;
+        // gomoku.printBoard();
+        // cout <<endl;
     }
+
+
+
+    // while(gomoku.isWinner(1) == false && gomoku.isWinner(2) == false){
+
+    //     int row = (rand() % 10);
+    //     int col = (rand() % 10);
+
+
+    //     gomoku.makeMove(row, col);
+
+    //     gomoku.printBoard();
+
+    //     gomoku.isWinner(1);
+    //     gomoku.isWinner(2);
+    // }
 
     // gomoku.printBoard();
     // gomoku.isWinner(2);
