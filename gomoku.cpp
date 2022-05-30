@@ -4,9 +4,7 @@
 #include<string>
 #include <vector>
 using namespace std;
-
 //Declare our board
-
 int n = 15;
 int board[15][15] = {0};
 struct Gomoku{
@@ -20,199 +18,83 @@ struct Gomoku{
     }
     
     bool isWinner(int player){
-        if(horizontal_check(player) == true){
-            return true;
-        }
-        if(vertical_check(player) == true){
-            return true;
-        }
-        if(upper_diagonal_check(player) == true){
-            return true;
-        }
-        if(lower_diagonal_check(player) == true){
+        if(is_horizontal(player) || is_vertical(player) || is_upper_diagonal(player) || is_lower_diagonal(player))return true;
+        return false;
+    }
+
+    bool match(int curr,int n1,int n2,int n3,int n4){
+        if(curr == n1 && curr == n2 && curr == n3 && curr == n4){
             return true;
         }
         return false;
     }
 
-    bool vertical_check(int player){
-        for(int col = 0; col < n; col++){
-            for(int row = 0;row < n; row++){
-                int assessed_index = col;       //This is the col index of current point on board
-                int first_index_right = col + 1;        // col index of first element to the right of current point
-                int second_index_right = col + 2;       // col index of second element to the right of current point
-                int third_index_right = col + 3;        // col index of third element to the right of current point
-
-                int first_index_left = col - 1;        // col index of first element to the left of current point
-                int second_index_left = col - 2;       // col index of second element to the left of current point
-                int third_index_left = col - 3;        // col index of third element to the left of current point
-
-                
-                if((first_index_right>= 0 & first_index_right<n)&&
-                (second_index_right>= 0 & second_index_right<n)&&
-                    (third_index_right>= 0 & third_index_right<n)){
-                        
-
-                    if((board[assessed_index][row] == player)&&
-                    (board[first_index_right][row] == player)&&
-                    (board[second_index_right][row] == player)&&
-                    (board[third_index_right][row] == player)){
-
+    bool is_horizontal(int player){
+        for(int row = 0 ; row < n ; row++){
+            for(int col = 0 ; col < n - 4 ; col++){
+                if(board[row][col] == player){//point of interest
+                    int n1 = board[row][col+1];
+                    int n2 = board[row][col+2];
+                    int n3 = board[row][col+3];
+                    int n4 = board[row][col+4];
+                    if(match(board[row][col],n1,n2,n3,n4)){
                         return true;
                     }
-                    else if ((board[assessed_index][row] == player)&&
-                    (board[first_index_left][row] == player)&&
-                    (board[second_index_left][row] == player)&&
-                    (board[third_index_left][row] == player))
-                    {
-                        return true;
-                    }
-                    
                 }
-
-                
-            }
-        }
-        return false;
-    }
-
-    bool horizontal_check(int player){
-        for(int col = 0; col < n; col++){
-            for(int row = 0;row < n; row++){
-                int assessed_index = row;       //This is the col index of current point on board
-                int first_index_right = row + 1;        // col index of first element to the below of current point
-                int second_index_right = row + 2;       // col index of second element to the below of current point
-                int third_index_right = row + 3;        // col index of third element to the below of current point
-
-                int first_index_left = row - 1;        // col index of first element to the above of current point
-                int second_index_left = row - 2;       // col index of second element to the above of current point
-                int third_index_left = row - 3;        // col index of third element to the above of current point
-
-                
-                if((first_index_right>= 0 & first_index_right<n)&&
-                (second_index_right>= 0 & second_index_right<n)&&
-                    (third_index_right>= 0 & third_index_right<n)){
-                        
-
-                    if((board[col][assessed_index] == player)&&
-                    (board[col][first_index_right] == player)&&
-                    (board[col][second_index_right] == player)&&
-                    (board[col][third_index_right] == player)){
-                        
-                        return true;
-                    }
-                    else if ((board[col][assessed_index] == player)&&
-                    (board[col][first_index_left] == player)&&
-                    (board[col][second_index_left] == player)&&
-                    (board[col][third_index_left] == player))
-                    {
-                        return true;
-                    }
-                    
-                }
-
-                
-            }
-        }
-        return false;
-    }
-    
-    bool upper_diagonal_check(int player){
-        for(int col = 0; col < n; col++){
-            for(int row = 0;row < n; row++){
-                int assessed_index_row = row;       //This is the row index of current point on board
-                int assessed_index_col = col;       //This is the col index of current point on board
-                int first_index_ud_right_row = row - 1;        // row index of first element in right upper diagonal of current point
-                int first_index_ud_right_col = col + 1;        // col index of first element in right upper diagonal of current point
-                int second_index_ud_right_row = row - 2;       // row index of second element in right upper diagonal current point
-                int second_index_ud_right_col = col + 2;       // col index of second element in right upper diagonal current point
-                int third_index_ud_right_row = row - 3;        // row index of third element in right upper diagonal current point
-                int third_index_ud_right_col = col + 3;        // col index of third element in right upper diagonal current point
-
-
-                int first_index_ud_left_row = row - 1;        // row index of first element in left upper diagonal of current point
-                int first_index_ud_left_col = col- 1;         // col index of third element in left upper diagonal of current point
-                int second_index_ud_left_row = row - 2;       // row index of second element in left upper diagonal of current point
-                int second_index_ud_left_col = col - 2;       // col index of second element in left upper diagonal of current point
-                int third_index_ud_left_row = row - 3;        // row index of third element in left upper diagonal of current point
-                int third_index_ud_left_col = col - 3;        // col index of third element in left upper diagonal of current point
-                
-                if((first_index_ud_right_col>= 0 & first_index_ud_right_col<n & first_index_ud_right_row>= 0 & first_index_ud_right_row<n)&&
-                (first_index_ud_left_col>= 0 & first_index_ud_left_col<n & first_index_ud_left_row>= 0 & first_index_ud_left_row<n)&&
-                (second_index_ud_right_col>= 0 & second_index_ud_right_col<n & second_index_ud_right_row>= 0 & second_index_ud_right_row<n)&&
-                (second_index_ud_left_col>= 0 & second_index_ud_left_col<n & second_index_ud_left_row>= 0 & second_index_ud_left_row<n)&&
-                (third_index_ud_right_col>= 0 & third_index_ud_right_col<n & third_index_ud_right_row>= 0 & third_index_ud_right_row<n)&&
-                (third_index_ud_left_col>= 0 & third_index_ud_left_col<n & third_index_ud_left_row>= 0 & third_index_ud_left_row<n)){
-                    
-
-                    if((board[assessed_index_row][assessed_index_col] == player)&&
-                    (board[first_index_ud_right_row][first_index_ud_right_col] == player)&&
-                    (board[second_index_ud_right_row][second_index_ud_right_col] == player)&&
-                    (board[third_index_ud_right_row][third_index_ud_right_col] == player)){
-                        
-                        return true;
-                    }
-                    else if ((board[assessed_index_row][assessed_index_col] == player)&&
-                    (board[first_index_ud_left_row][first_index_ud_left_col] == player)&&
-                    (board[second_index_ud_left_row][second_index_ud_left_col] == player)&&
-                    (board[third_index_ud_left_row][third_index_ud_left_col] == player))
-                    {
-                        return true;
-                    }
-                    
+                else{
+                    continue;
                 }
             }
         }
         return false;
     }
 
-    bool lower_diagonal_check(int player){
-        for(int col = 0; col < n; col++){
-            for(int row = 0;row < n; row++){
-                int assessed_index_row = row;       //This is the row index of current point on board
-                int assessed_index_col = col;       //This is the col index of current point on board
-                int first_index_ld_right_row = row + 1;        // row index of first in right lower diagonal of current point
-                int first_index_ld_right_col = col + 1;        // col index of first in right lower diagonal of current point
-                int second_index_ld_right_row = row + 2;       // row index of second in right lower diagonal of current point
-                int second_index_ld_right_col = col + 2;       // col index of second in right lower diagonal of current point
-                int third_index_ld_right_row = row + 3;        // row index of third in right lower diagonal of current point
-                int third_index_ld_right_col = col + 3;        // col index of third in right lower diagonal of current point
-
-
-                int first_index_ld_left_row = row + 1;        // row index of first element in left lower diagonal of current point
-                int first_index_ld_left_col = col- 1;         // col index of first element in left lower diagonal of current point
-                int second_index_ld_left_row = row + 2;       // row index of second element in left lower diagonal of current point
-                int second_index_ld_left_col = col - 2;       // col index of second element in left lower diagonal of current point
-                int third_index_ld_left_row = row + 3;        // row index of third element in left lower diagonal of current point
-                int third_index_ld_left_col = col - 3;        // col index of third element in left lower diagonal of current point
-                
-                if((first_index_ld_right_col>= 0 & first_index_ld_right_col<n & first_index_ld_right_row>= 0 & first_index_ld_right_row<n)&&
-                (first_index_ld_left_col>= 0 & first_index_ld_left_col<n & first_index_ld_left_row>= 0 & first_index_ld_left_row<n)&&
-                (second_index_ld_right_col>= 0 & second_index_ld_right_col<n & second_index_ld_right_row>= 0 & second_index_ld_right_row<n)&&
-                (second_index_ld_left_col>= 0 & second_index_ld_left_col<n & second_index_ld_left_row>= 0 & second_index_ld_left_row<n)&&
-                (third_index_ld_right_col>= 0 & third_index_ld_right_col<n & third_index_ld_right_row>= 0 & third_index_ld_right_row<n)&&
-                (third_index_ld_left_col>= 0 & third_index_ld_left_col<n & third_index_ld_left_row>= 0 & third_index_ld_left_row<n)){
-                    
-
-                    if((board[assessed_index_row][assessed_index_col] == player)&&
-                    (board[first_index_ld_right_row][first_index_ld_right_col] == player)&&
-                    (board[second_index_ld_right_row][second_index_ld_right_col] == player)&&
-                    (board[third_index_ld_right_row][third_index_ld_right_col] == player)){
-                        
+    bool is_vertical(int player){
+        for(int row = 0 ; row < n-4 ; row++){
+            for(int col = 0 ; col < n ; col++){
+                if(board[row][col] == player){
+                    int n1 = board[row+1][col];
+                    int n2 = board[row+2][col];
+                    int n3 = board[row+3][col];
+                    int n4 = board[row+4][col];
+                    if(match(board[row][col], n1, n2, n3,n4)){
                         return true;
                     }
-                    else if ((board[assessed_index_row][assessed_index_col] == player)&&
-                    (board[first_index_ld_left_row][first_index_ld_left_col] == player)&&
-                    (board[second_index_ld_left_row][second_index_ld_left_col] == player)&&
-                    (board[third_index_ld_left_row][third_index_ld_left_col] == player))
-                    {
-                        
-                        return true;
-                    }
-                    
                 }
+            }
+        }
+        return false;
+    }
 
-                
+    bool is_lower_diagonal(int player){
+        for(int row = 0 ; row < n - 4 ; row ++){
+            for(int col = 0 ; col < n-4 ; col++){
+                if(board[row][col] == player){
+                    int n1 = board[row+1][col+1];
+                    int n2 = board[row+2][col+2];
+                    int n3 = board[row+3][col+3];
+                    int n4 = board[row+4][col+4];
+                    if(match(board[row][col], n1, n2, n3,n4)){
+                        return true;
+                    }
+                }
+            }
+        }
+        return false;
+    }
+
+    bool is_upper_diagonal(int player){
+        for(int row = 0 ; row < n - 4 ; row++){
+            for(int col = 4 ; col < n ; col++){
+                if(board[row][col] == player){
+                    int n1 = board[row+1][col-1];
+                    int n2 = board[row+2][col-2];
+                    int n3 = board[row+3][col-3];
+                    int n4 = board[row+4][col-4];
+                    if(match(board[row][col], n1, n2, n3,n4)){
+                        return true;
+                    }
+                }
             }
         }
         return false;
@@ -265,38 +147,14 @@ struct Gomoku{
 };
 
 int main(){
+    
     Gomoku gomoku(2);
     while(!gomoku.status){
         int row = (rand() % 10);
         int col = (rand() % 10);
         gomoku.makeMove(row, col);
-        // cout << "After player " << gomoku.previous << " Board position is: "<<endl;
-        // gomoku.printBoard();
-        // cout <<endl;
     }
-
-
-
-    // while(gomoku.isWinner(1) == false && gomoku.isWinner(2) == false){
-
-    //     int row = (rand() % 10);
-    //     int col = (rand() % 10);
-
-
-    //     gomoku.makeMove(row, col);
-
-    //     gomoku.printBoard();
-
-    //     gomoku.isWinner(1);
-    //     gomoku.isWinner(2);
-    // }
-
-    // gomoku.printBoard();
-    // gomoku.isWinner(2);
     
     
     return 0;
 }
-
-
-
